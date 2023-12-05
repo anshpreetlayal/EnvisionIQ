@@ -1,0 +1,10 @@
+{
+  "expo": {
+    "name": "EnvisionIQ",
+    "slug": "EnvisionIQ",
+    "version": "1.0.0",
+    "assetBundlePatterns": [
+      "**/*"
+    ]
+  }
+}
