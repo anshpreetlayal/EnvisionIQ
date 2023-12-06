@@ -1,21 +1,39 @@
-import { StatusBar } from 'expo-status-bar';
-import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import React from "react";
+import {
+  Text,
+  SafeAreaView,
+  StyleSheet,
+  Button,
+  ActivityIndicator,
+} from "react-native";
+import { NavigationContainer } from "@react-navigation/native";
 
 export default function App() {
   return (
-    <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
-      <StatusBar style="auto" />
-    </View>
+    <SafeAreaView style={styles.container}>
+      <Text style={styles.text}>Welcome to EnvisionIQ</Text>
+      <ActivityIndicator size="large" color="purple" animating={true} />
+      <Button
+        title="Get quote"
+        onPress={() => {
+          console.log("Button pressed");
+        }}
+      />
+    </SafeAreaView>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
+    justifyContent: "center",
+    alignItems: "center",
+    backgroundColor: "#ecf0f1",
+    padding: 8,
+  },
+  text: {
+    fontSize: 24,
+    fontWeight: "bold",
+    marginBottom: 20,
   },
 });
