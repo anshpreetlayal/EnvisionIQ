@@ -12,3 +12,17 @@ export const updateUserProfile = (profileData) => ({
           `API_ENDPOINT_FOR_USER_DETAILS?userId=${userId}`,
         );
         const data = await response.json();
+      
+        dispatch({
+            type: "FETCH_USER_DETAILS_SUCCESS",
+            payload: data,
+          });
+        } catch (error) {
+          dispatch({
+            type: "FETCH_USER_DETAILS_FAILURE",
+            payload: error.message,
+          });
+        }
+      };
+    };
+      
