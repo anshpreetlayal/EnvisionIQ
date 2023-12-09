@@ -26,4 +26,17 @@ export const fetchQuoteOfTheDay = () => {
           `API_ENDPOINT_FOR_THEMED_QUOTES?theme=${theme}`,
         );
         const data = await response.json();
-      
+    
+        dispatch({
+            type: "FETCH_THEMED_QUOTES_SUCCESS",
+            payload: { theme, quotes: data },
+          });
+        } catch (error) {
+          dispatch({
+            type: "FETCH_THEMED_QUOTES_FAILURE",
+            payload: { theme, error: error.message },
+          });
+        }
+      };
+    };
+    
