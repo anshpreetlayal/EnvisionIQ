@@ -12,3 +12,17 @@ function GetQuote(props) {
     if (!(props == undefined)) {
       setCategory(props.category);
     }
+
+    fetch(url, {
+        method: "GET",
+        headers: apikey,
+      })
+        .then((res) => res.json())
+        .then((json) => setQuote(json[0].quote));
+    }, []);
+  
+    return <Text>{quote}</Text>;
+  }
+  
+  export default GetQuote;
+  
