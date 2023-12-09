@@ -3,3 +3,12 @@ export const updateUserProfile = (profileData) => ({
     payload: profileData,
   });
 
+
+  export const fetchUserDetails = (userId) => {
+    return async (dispatch) => {
+      try {
+        // Implement API call to fetch user details based on userId
+        const response = await fetch(
+          `API_ENDPOINT_FOR_USER_DETAILS?userId=${userId}`,
+        );
+        const data = await response.json();
