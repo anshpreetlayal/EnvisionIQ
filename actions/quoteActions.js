@@ -17,4 +17,13 @@ export const fetchQuoteOfTheDay = () => {
       }
     };
   };
-  
+
+  export const fetchThemedQuotes = (theme) => {
+    return async (dispatch) => {
+      try {
+        // Implement API call to fetch themed quotes
+        const response = await fetch(
+          `API_ENDPOINT_FOR_THEMED_QUOTES?theme=${theme}`,
+        );
+        const data = await response.json();
+      
