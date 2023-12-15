@@ -1,11 +1,11 @@
-import React from 'react';
-import { View, Text, StyleSheet, FlatList, TouchableOpacity } from 'react-native';
+import React, { useState } from 'react';
+import { View, Text, StyleSheet, FlatList, TouchableOpacity, TextInput, Button } from 'react-native';
 
-const JournalScreen = () => {
-  const journalEntries = [
-    { id: '1', title: 'Entry 1', content: 'This is the content of entry 1.' },
-    { id: '2', title: 'Entry 2', content: 'This is the content of entry 2.' },
-  ];
+const JournalScreen = ({navigation}) => {
+  const [journalEntries, setJournalEntries] = useState([]);
+
+  const [newEntryTitle, setNewEntryTitle] = useState('');
+  const [newEntryContent, setNewEntryContent] = useState('');
 
   const renderJournalEntry = ({ item }) => {
     return (
@@ -16,9 +16,38 @@ const JournalScreen = () => {
     );
   };
 
+  const addJournalEntry = () => {
+    const newEntry = {
+      id: Math.random().toString(),
+      title: newEntryTitle,
+      content: newEntryContent,
+    };
+    setJournalEntries([...journalEntries, newEntry]);
+    setNewEntryTitle('');
+    setNewEntryContent('');
+  };
+
   return (
     <View style={styles.container}>
-      <Text style={styles.header}>Journal Screen</Text>
+      <Text style={styles.header}>Journal your thoughts !</Text>
+
+      <View style={styles.formContainer}>
+        <TextInput
+          placeholder="Enter title"
+          style={styles.input}
+          value={newEntryTitle}
+          onChangeText={setNewEntryTitle}
+        />
+        <TextInput
+          placeholder="Enter content"
+          style={[styles.input, { height: 100 }]}
+          multiline
+          value={newEntryContent}
+          onChangeText={setNewEntryContent}
+        />
+        <Button title="Add Entry" onPress={addJournalEntry} />
+      </View>
+
       <FlatList
         data={journalEntries}
         keyExtractor={(item) => item.id}
@@ -33,30 +62,49 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     padding: 20,
-    backgroundColor: '#f0f0f0',
+    backgroundColor: '#87CEFA',
   },
   header: {
     fontSize: 24,
-    fontWeight: 'bold',
+    fontWeight: 'italic',
+    fontFamily: 'georgia',
     marginBottom: 15,
     textAlign: 'center',
+  },
+  formContainer: {
+    marginBottom: 20,
+  },
+  input: {
+    borderWidth: 2,
+    borderColor: '#800000',
+    borderRadius: 10,
+    padding: 10,
+    marginBottom: 10,
+    backgroundColor: '#fff',
   },
   entryList: {
     flex: 1,
     marginTop: 10,
   },
   entryContainer: {
-    borderWidth: 1,
-    borderColor: '#ccc',
     borderRadius: 8,
-    padding: 10,
+    padding: 15,
     marginBottom: 10,
-    backgroundColor: '#fff',
+    backgroundColor: '#FFC0CB',
+    shadowColor: '#800080',
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.25,
+    shadowRadius: 3.84,
+    elevation: 5,
   },
   entryTitle: {
     fontSize: 18,
     fontWeight: 'bold',
     marginBottom: 5,
+    fontFamily: 'georgia',
   },
   entryContent: {
     fontSize: 16,
