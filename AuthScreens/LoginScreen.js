@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   View,
   Text,
@@ -6,12 +6,28 @@ import {
   Button,
   StyleSheet,
   TouchableOpacity,
+  ImageBackground,
 } from "react-native";
 
 const LoginScreen = ({ navigation }) => {
   const [usernameOrEmail, setUsernameOrEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
+  const [backgroundImage, setBackgroundImage] = useState(null);
+
+  useEffect(() => {
+    // Fetch image from Unsplash API
+    fetch(
+      "https://api.unsplash.com/photos/1EJX-rotoeg?client_id=jxOWgBzcjcJ2gtMEO7nQYi7IrRyTTpV7CiOVhp1EI8I"
+    )
+      .then((response) => response.json())
+      .then((data) => {
+        setBackgroundImage(data.urls.regular);
+      })
+      .catch((error) => {
+        console.error("Error fetching background image:", error);
+      });
+  }, []);
 
   const handleLogin = () => {
     if (!usernameOrEmail || !password) {
@@ -24,34 +40,38 @@ const LoginScreen = ({ navigation }) => {
   };
 
   return (
-    <View style={styles.container}>
-      <Text style={styles.title}>Log In</Text>
+    <ImageBackground
+      source={{ uri: backgroundImage }}
+      style={styles.container}
+      resizeMode="cover"
+    >
+      <View style={styles.overlay}>
+        <Text style={styles.title}>Log In</Text>
 
-      <TextInput
-        style={styles.input}
-        placeholder="Username or Email"
-        value={usernameOrEmail}
-        onChangeText={setUsernameOrEmail}
-      />
+        <TextInput
+          style={styles.input}
+          placeholder="Username or Email"
+          value={usernameOrEmail}
+          onChangeText={setUsernameOrEmail}
+        />
 
-      <TextInput
-        style={styles.input}
-        placeholder="Password"
-        value={password}
-        onChangeText={setPassword}
-        secureTextEntry
-      />
+        <TextInput
+          style={styles.input}
+          placeholder="Password"
+          value={password}
+          onChangeText={setPassword}
+          secureTextEntry
+        />
 
-      {error ? <Text style={styles.error}>{error}</Text> : null}
+        {error ? <Text style={styles.error}>{error}</Text> : null}
 
-      <TouchableOpacity style={styles.loginButton} onPress={handleLogin}>
-        <Text style={styles.loginButtonText}>Log In</Text>
-      </TouchableOpacity>
+        <Button title="Log In" onPress={handleLogin} color="#26A65B" />
 
-      <TouchableOpacity onPress={() => navigation.navigate("SignUp")}>
-        <Text style={styles.link}>Don't have an account? Sign Up</Text>
-      </TouchableOpacity>
-    </View>
+        <TouchableOpacity onPress={() => navigation.navigate("SignUp")}>
+          <Text style={styles.link}>Don't have an account? Sign Up</Text>
+        </TouchableOpacity>
+      </View>
+    </ImageBackground>
   );
 };
 
@@ -59,44 +79,27 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     justifyContent: "center",
-    alignItems: "center",
+  },
+  overlay: {
+    backgroundColor: "rgba(255, 255, 255, 0.4)",
     padding: 16,
   },
   title: {
     fontSize: 24,
     marginBottom: 16,
+    color: "white",
   },
   input: {
     height: 40,
-    width: "100%",
-    borderColor: "gray",
+    borderColor: "white",
     borderWidth: 1,
     marginBottom: 12,
     paddingHorizontal: 10,
+    color: "white",
   },
   error: {
     color: "red",
     marginBottom: 12,
-  },
-  loginButton: {
-    backgroundColor: "blue",
-    borderRadius: 5,
-    paddingVertical: 12,
-    paddingHorizontal: 50,
-    marginTop: 10,
-    elevation: 3, // Shadow for Android
-    shadowColor: "#000", // Shadow for iOS
-    shadowOffset: {
-      width: 0,
-      height: 2,
-    },
-    shadowOpacity: 0.25,
-    shadowRadius: 3.84,
-  },
-  loginButtonText: {
-    color: "white",
-    fontWeight: "bold",
-    textAlign: "center",
   },
   link: {
     color: "blue",
