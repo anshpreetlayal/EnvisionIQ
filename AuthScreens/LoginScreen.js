@@ -44,7 +44,9 @@ const LoginScreen = ({ navigation }) => {
 
       {error ? <Text style={styles.error}>{error}</Text> : null}
 
-      <Button title="Log In" onPress={handleLogin} />
+      <TouchableOpacity style={styles.loginButton} onPress={handleLogin}>
+        <Text style={styles.loginButtonText}>Log In</Text>
+      </TouchableOpacity>
 
       <TouchableOpacity onPress={() => navigation.navigate("SignUp")}>
         <Text style={styles.link}>Don't have an account? Sign Up</Text>
@@ -57,6 +59,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     justifyContent: "center",
+    alignItems: "center",
     padding: 16,
   },
   title: {
@@ -65,6 +68,7 @@ const styles = StyleSheet.create({
   },
   input: {
     height: 40,
+    width: "100%",
     borderColor: "gray",
     borderWidth: 1,
     marginBottom: 12,
@@ -73,6 +77,26 @@ const styles = StyleSheet.create({
   error: {
     color: "red",
     marginBottom: 12,
+  },
+  loginButton: {
+    backgroundColor: "blue",
+    borderRadius: 5,
+    paddingVertical: 12,
+    paddingHorizontal: 50,
+    marginTop: 10,
+    elevation: 3, // Shadow for Android
+    shadowColor: "#000", // Shadow for iOS
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.25,
+    shadowRadius: 3.84,
+  },
+  loginButtonText: {
+    color: "white",
+    fontWeight: "bold",
+    textAlign: "center",
   },
   link: {
     color: "blue",
